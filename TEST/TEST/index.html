@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jQuery test </title>
+  <title>♥NRKOREA♥</title>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
 
@@ -14,17 +14,42 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script>
+    function showWarning() {
+        alert("무단 복제시 민형사상 처벌을 받을 수 있습니다.");
+    }
+
+    function attachClickListener() {
+        const noRightClick = document.getElementById('pdfBox');
+        noRightClick.addEventListener('contextmenu', showWarning);
+    }
+    
+    function preventSpacebarCapture(event) {
+        if (event.keyCode === 42) {
+            event.preventDefault();
+            event.stopPropagation();
+            showWarning();
+        }
+    }
+    
+    // 페이지 로드 시 클릭 이벤트 리스너 등록
+    window.addEventListener('load', function() {
+        attachClickListener();
+        window.addEventListener('keydown', preventSpacebarCapture);
+    });
+</script>
+
+
 </head>
 
-<body>
-
+<body oncontextmenu="return false;">
 
 <div class="container-fluid">
 
   <div class="row">
+  
     <div class="col-md-12">
-
-      <div class="row navbar fixed-top navbar-light bg-info ">
+      <div  style="background-color: black;" class="row navbar fixed-top navbar-light  ">
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
@@ -33,16 +58,17 @@
             <span> <input type="text" id="currentPageNum" name="currentPageNum" style="float: left; text-align: right; width: 80px"></span>
             <span style="float: left; width: 30px; text-align: center;  color: white"> / </span>
             <span id="max_pdf_page" style="float: left; width: 70px; color: white"></span>
+          
           </div>
         </div>
         <div class="col-md-4">
         </div>
 
-        <br><br><hr>
+      
       </div>
 
-      <div class="row" style="margin-top: 100px;">
-        <div class="col-md-3">
+      <div class="row" style="margin-top: 0px;">
+        <div class="col-md-2">
           <div id="thumb_list"> </div>
         </div>
         <div class="col-md-9">
@@ -107,7 +133,7 @@ function renderPage(num) {
 
     var canvas    = document.createElement('canvas');
     canvas.setAttribute("id", "page_" + pageNum );
-    canvas.setAttribute("style", 'width: ' + pageWidth + 'px; height: ' + pageHeight + 'px; border: dotted 1px green');
+    canvas.setAttribute("style", 'width: ' + pageWidth + 'px; height: ' + pageHeight + 'px; border: dotted 1px');
     canvas.width  = pageWidth;
     canvas.height = pageHeight;
     canvasBox.appendChild(canvas);
@@ -138,13 +164,12 @@ function renderPage(num) {
       var imgThumb    = document.getElementById('thumb_img_' + nowPageNum );
       imgThumb.setAttribute('src', imgUrl); // base64
       imgThumb.setAttribute('border', '1');
-      imgThumb.setAttribute('width', 150);
+      imgThumb.setAttribute('width', 120); //썸네일이미지속성크기
     });
 
   });
 
 }
-
 
 /**
  * Asynchronously downloads PDF.
@@ -163,7 +188,7 @@ function pdf_url( url )
     let pageNum       = 0;
     for ( pageNum = 1; pageNum <= MAX_PDF_PAGE; pageNum++ ) {
       var alt = pageNum + ' page';
-      thumbList += '<a id="thumb_href_' + pageNum + '" onclick="pdf_page_move( ' + pageNum + ' )"><img id="thumb_img_' + pageNum + '" alt="' + alt + '"></a><br><div style="text-align: left;"> - ' + pageNum + ' - </div><p></p>';
+      thumbList += '<a id="thumb_href_' + pageNum + '" onclick="pdf_page_move( ' + pageNum + ' )"><img id="thumb_img_' + pageNum + '" alt="' + alt + '"></a><br><div style="text-align: left;"> </div><p></p>';
     }
     $( "#thumb_list" ).append(thumbList);
 
