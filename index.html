@@ -139,15 +139,14 @@ function renderPage(num) {
     pageNum++;
 
     var canvasBox   = document.getElementById('pdfBox');
-    var viewport    = page.getViewport({scale: scale});
+    var viewport    = page.getViewport({scale: 1.2});
     var pageWidth   = viewport.width;
     var pageHeight  = viewport.height;
 
     var canvas    = document.createElement('canvas');
     
     canvas.setAttribute("id", "page_" + pageNum );
-    //canvas.setAttribute("style", 'width: ' + pageWidth + 'px; height: ' + pageHeight + 'px; border: dotted 1px');
-    canvas.setAttribute("style", 'width: ' + pageWidth + 'px; height: ' + pageHeight + 'px; border: dotted 1px');
+    canvas.setAttribute("style", 'width: ' + pageWidth + 'px; height: ' + pageHeight + 'px; border: 1px solid gray; box-shadow: 0 5px 3px black');
     canvas.width  = pageWidth;
     canvas.height = pageHeight;
     canvasBox.appendChild(canvas);
