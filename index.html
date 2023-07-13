@@ -19,12 +19,12 @@
       margin: 0;
       padding: 0;
     }
-    .swiper-button-prev{
+   /* .swiper-button-prev{
       left: var(--swiper-navigation-sides-offset,300px);
       }
     .swiper-button-next{
       right: var(--swiper-navigation-sides-offset,300px);
-    }
+    }*/
     .swiper-container {
       height: 100vh;
       width: 100vw;
@@ -42,9 +42,9 @@
       left: 50%;
       transform: translateX(-50%);
     }
-    :root {
+    /*:root {
       --swiper-navigation-size: 150px;
-    }
+    }*/
     canvas {
       height: auto;
       width: auto;
@@ -52,7 +52,7 @@
   </style>
   <script type="text/javascript">
     function showWarning() {
-      alert("무단 복제시 민형사상 처벌을 받을 수 있습니다.");
+      alert("경고!!무단 복제시 민•형사상 처벌을 받을 수 있습니다.");
     }
     function blockEvent(event) {
     const blockedKeys = {
@@ -129,7 +129,6 @@
     }
   });
 
-  // Attach event listeners to block events
   document.addEventListener("keydown", blockEvent);
   document.addEventListener("keyup", blockEvent);
   document.addEventListener("mouseup", blockEvent);
@@ -141,7 +140,7 @@
 <body>
   <header class="container">
     <div class="row flex-nowrap justify-content-between align-items-center">
-      <div class="col-8 p-3 text-bg-dark">노량진역사개발사업계획서</div>
+      <div class="col-8 p-3 text-bg-dark">어디든뿅뿅개발사업계획서</div>
       <div class="col-4 d-flex justify-content-end align-items-center"> </div>    
       </div>     
       </header>
@@ -165,8 +164,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0/html2canvas.js"></script>
   <script>
-    const url = 'https://public.ph.files.1drv.com/y4m-uvhOUAOEC8SukfS7sL0CP6VGtt0TnO7uS_AS14_XnR6UCzQXY843EVtyvX4xYcCZFDNF9Jud6PPhTYpYXSdUAIAgNs46BfR8_Ryzs9JRVDJM7ezQ9YftKqHkJE5iK3HcAUtKa7BysUJhWitikN2NBKSavGKjLdG1uoYTxj_PxEy_85PW8SPnehpDhUh9bp_jIErC4sYZbWUrdFtIPYQZGGI5AWGDZQyI34Zmzz6XmM';
-    // 'https://t7orhw.by.files.1drv.com/y4mhgcFCwPjQU9_fs8HPaAfMPpwppoNhhwNT7jaikMf70GYLwFtoz6m9vVOAtKFRjz3-wxwo_eU1IgeRDIFNNk3qNoA-gISlKuFQX73fzkkkgyp9NezrqgaAo-jrYxIPjg2q9Py5RsfvrvQ1Dp9OYXDZUM2OqGA68FMP5zz1LGbwJ16DgflUUsPsxAQOAKTEpK5OX9O3Ys-W4mOOhOgt8OnHw'; // 여기에 URL을 입력하세요.
+    const url = //'https://public.ph.files.1drv.com/y4m-uvhOUAOEC8SukfS7sL0CP6VGtt0TnO7uS_AS14_XnR6UCzQXY843EVtyvX4xYcCZFDNF9Jud6PPhTYpYXSdUAIAgNs46BfR8_Ryzs9JRVDJM7ezQ9YftKqHkJE5iK3HcAUtKa7BysUJhWitikN2NBKSavGKjLdG1uoYTxj_PxEy_85PW8SPnehpDhUh9bp_jIErC4sYZbWUrdFtIPYQZGGI5AWGDZQyI34Zmzz6XmM';
+   'https://t7orhw.by.files.1drv.com/y4mhgcFCwPjQU9_fs8HPaAfMPpwppoNhhwNT7jaikMf70GYLwFtoz6m9vVOAtKFRjz3-wxwo_eU1IgeRDIFNNk3qNoA-gISlKuFQX73fzkkkgyp9NezrqgaAo-jrYxIPjg2q9Py5RsfvrvQ1Dp9OYXDZUM2OqGA68FMP5zz1LGbwJ16DgflUUsPsxAQOAKTEpK5OX9O3Ys-W4mOOhOgt8OnHw'; // 여기에 URL을 입력하세요.
 
     async function getPdfDoc(url) {
       const loadingTask = pdfjsLib.getDocument(url);
