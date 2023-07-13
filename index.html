@@ -1,273 +1,222 @@
-
 <!DOCTYPE html>
-<html lang="ko">
+<html style="overflow: hidden;">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- minimum-scale=1.0은 최소사이즈를 1.0으로 처리해서 축소를 못하게 막습니다.
-  ☞ maximum-scale=1.0은 최대사이즈를 1.0으로 처리해서 확대를 못하게 막습니다.
-  ☞ user-scalable=no는 사용자크기변화를 no로 처리해서 크기변화를 못하게 막습니다. -->
-  <title>♥NRKOREA♥</title>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"  crossorigin="anonymous"></script>
-  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <title>[[ NRKOREA ]] </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  
   <style>
-    .container, .container-fluid {
-      background: #eaeaed;
-
+    html,body {
+      position: relative;
+      height: 100%;
     }
-    .fixed{
-      background: #eaeaed;
-      text-align: center;
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-button-prev{
+      left: var(--swiper-navigation-sides-offset,300px);
+      }
+    .swiper-button-next{
+      right: var(--swiper-navigation-sides-offset,300px);
+    }
+    .swiper-container {
+      height: 100vh;
+      width: 100vw;
+    }
+    .swiper-slide {
+      width: 100%; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .swiper-pagination {
+      position: absolute;
+      font-size: 60px;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    :root {
+      --swiper-navigation-size: 150px;
     }
     canvas {
-        background: none,
-    
-  
+      height: auto;
+      width: auto;
     }
   </style>
-  <script>
+  <script type="text/javascript">
     function showWarning() {
-        alert("무단 복제시 민형사상 처벌을 받을 수 있습니다.");
+      alert("무단 복제시 민형사상 처벌을 받을 수 있습니다.");
     }
-
-    function attachClickListener() {
-        const noRightClick = document.getElementById('pdfBox');
-        noRightClick.addEventListener('contextmenu', showWarning);
-    }
-    
-    function preventSpacebarCapture(event) {
-        if (event.keyCode === 42) {
-            event.preventDefault();
-            event.stopPropagation();
-            showWarning();
-        }
-    }
-    
-    // 페이지 로드 시 클릭 이벤트 리스너 등록
-    window.addEventListener('load', function() {
-        attachClickListener();
-        window.addEventListener('keydown', preventSpacebarCapture);
-    });
-</script>
-
-</head>
-<body oncontextmenu="return false;">
-<div class="container"> 
-  <div class="fixed">
-  <div class="row">
-  
-    <div class="col">
-      <nav style="background-color: rgb(119, 114, 114);" class="row navbar navbar-light">
-        <!-- <div class="col-md-4">
-        </div> -->
-        <div class="col" style="align-content: center;">
-
-          <div style="width: 200px;">
-            <span> <input type="text" id="currentPageNum" name="currentPageNum" style="float: left; text-align: right; width: 60px; background-color:  rgb(119, 114, 114); border-radius: 0%; border: 0px;"></span>
-            <span style="float: left; width: 30px; text-align: center;  color: white"> / </span>
-            <span id="max_pdf_page" style="float: left; width: 60px; color: white"></span>
-          
-          </div>
-        </div>
-        <!-- <div class="col-md-4">
-        </div> -->
-
-      
-      </nav>
-    </div>
-      <div class="row" style="margin-top: 60px;">
-        <!--<div class="col-md-2">
-           <div id="thumb_list"> </div> -->
-        </div>
-        <div class="col">
-          <div id="pdfBox" style="align-content: center; overflow-y:scroll;  height:100%; "> </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-</body>
-</html>
-
-<script>
-
-// ------------------------------------------------------------------------------
-// https://mozilla.github.io/pdf.js/examples/
-// ------------------------------------------------------------------------------
-
-
-// 사용자
-let MAX_PDF_PAGE    = 0;
-var scrollTop       = 0;
-
-// Loaded via <script> tag, create shortcut to access PDF.js exports.
-var pdfjsLib = window['pdfjs-dist/build/pdf'];
-
-// The workerSrc property shall be specified.
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
-
-var pdfDoc = null,
-    pageNum = 0,
-    pageRendering = false,
-    pageNumPending = null,
-    scale = 1;
-    // canvas = document.getElementById('the-canvas'),
-    // ctx = canvas.getContext('2d');
-
-
-
-/**
- * Get page info from document, resize canvas accordingly, and render page.
- * @param num Page number.
- */
-function renderPage(num) {
-  pageRendering = true;
-
-  // Using promise to fetch the page
-  pdfDoc.getPage(num).then(function(page)
-  {
-    pageNum++;
-
-    var canvasBox   = document.getElementById('pdfBox');
-    var viewport    = page.getViewport({scale: 1.2});
-    var pageWidth   = viewport.width;
-    var pageHeight  = viewport.height;
-
-    var canvas    = document.createElement('canvas');
-    
-    canvas.setAttribute("id", "page_" + pageNum );
-    canvas.setAttribute("style", 'width: ' + pageWidth + 'px; height: ' + pageHeight + 'px; border: 1px solid gray; box-shadow: 0 5px 3px black');
-    canvas.width  = pageWidth;
-    canvas.height = pageHeight;
-    canvasBox.appendChild(canvas);
-    canvasBox.attachShadow
-
-    // Render PDF page into canvas context
-    var ctx = canvas.getContext('2d');
-   
-
-    var renderContext = {
-      canvasContext: ctx,
-      viewport: viewport
+    function blockEvent(event) {
+    const blockedKeys = {
+      // Ctrl + P (print page)
+      80: "Ctrl-P",
+      // PrtScn (screenshot)
+      44: "PrtScn",
     };
 
-    var renderTask = page.render(renderContext);
+    if (event.key === "PrtSc" || event.keyCode === 44) {
+      showWarning();
+      event.preventDefault();
+      event.stopPropagation();
+      return false;
+    }
 
-    // Wait for rendering to finish
-    renderTask.promise.then(function( event )
-    {
-      pageRendering = false;
-      if (pageNumPending !== null) {
-        // New page rendering is pending
-        renderPage(pageNumPending);
-        pageNumPending = null;
+    // Prevent Ctrl + P, PrtScn
+    if (event.ctrlKey && event.keyCode === 80) {
+      showWarning();
+      event.preventDefault();
+      event.stopPropagation();
+      return false;
+    }
+
+    if (event.type === "keyup") {
+      showWarning();
+      event.preventDefault();
+      event.stopPropagation();
+      return false;
+    }
+
+    // prevent mouse right click
+    if (event.button === 2) {
+      showWarning();
+      event.preventDefault();
+      event.stopPropagation();
+      return false;
+    }
+
+    // prevent mouse dragging
+    if (event.type === "mousedown" && event.button === 0) {
+      document.addEventListener("mousemove", preventDrag);
+    } else if (event.type === "mouseup") {
+      document.removeEventListener("mousemove", preventDrag);
+    }
+  }
+
+  // function to prevent mouse drag
+  function preventDrag(event) {
+    event.preventDefault();
+    return false;
+  }
+
+  window.minimize = function () {
+    if (window.state) {
+      // The window is already minimized
+      return;
+    }
+    window.state = 1;
+    // Save the current window location and dimensions
+    window.savedLocation = [window.screenX, window.screenY];
+    window.savedSize = [window.outerWidth, window.outerHeight];
+
+    // Move the window to the upper left corner of the screen
+    window.moveTo(0, 0);
+    // Resize the window to be as small as possible
+    window.resizeTo(0, 0);
+  };
+
+  // screen capture event
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "PrtSc" || event.keyCode === 44) {
+      minimize();
+    }
+  });
+
+  // Attach event listeners to block events
+  document.addEventListener("keydown", blockEvent);
+  document.addEventListener("keyup", blockEvent);
+  document.addEventListener("mouseup", blockEvent);
+  document.addEventListener("mousedown", blockEvent);
+
+  </script>
+    
+</head>
+<body>
+  <header class="container">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-8 p-3 text-bg-dark">노량진역사개발사업계획서</div>
+      <div class="col-4 d-flex justify-content-end align-items-center"> </div>    
+      </div>     
+      </header>
+
+    </header>
+    
+
+
+  <div class="swiper-container">
+    
+    <div class="swiper-wrapper" id="swiperWrapper"></div>
+    
+  </div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+    
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10.0.4/swiper-bundle.min.js.map"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0/html2canvas.js"></script>
+  <script>
+    const url = 'https://public.ph.files.1drv.com/y4m-uvhOUAOEC8SukfS7sL0CP6VGtt0TnO7uS_AS14_XnR6UCzQXY843EVtyvX4xYcCZFDNF9Jud6PPhTYpYXSdUAIAgNs46BfR8_Ryzs9JRVDJM7ezQ9YftKqHkJE5iK3HcAUtKa7BysUJhWitikN2NBKSavGKjLdG1uoYTxj_PxEy_85PW8SPnehpDhUh9bp_jIErC4sYZbWUrdFtIPYQZGGI5AWGDZQyI34Zmzz6XmM';
+    // 'https://t7orhw.by.files.1drv.com/y4mhgcFCwPjQU9_fs8HPaAfMPpwppoNhhwNT7jaikMf70GYLwFtoz6m9vVOAtKFRjz3-wxwo_eU1IgeRDIFNNk3qNoA-gISlKuFQX73fzkkkgyp9NezrqgaAo-jrYxIPjg2q9Py5RsfvrvQ1Dp9OYXDZUM2OqGA68FMP5zz1LGbwJ16DgflUUsPsxAQOAKTEpK5OX9O3Ys-W4mOOhOgt8OnHw'; // 여기에 URL을 입력하세요.
+
+    async function getPdfDoc(url) {
+      const loadingTask = pdfjsLib.getDocument(url);
+      return await loadingTask.promise;
+    }
+
+    async function getImageElement(page) {
+      const scale = window.innerWidth / (page.getViewport({scale: 1}).width*1.8);
+      const viewport = page.getViewport({scale: scale});
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      const renderContext = {
+        canvasContext: context,
+        viewport: viewport
+      };
+
+      await page.render(renderContext).promise;
+      return canvas;
+    }
+
+    async function setupSwiper() {
+      const pdfDoc = await getPdfDoc(url);
+      const numPages = pdfDoc.numPages;
+      const swiperWrapper = document.getElementById('swiperWrapper');
+
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdfDoc.getPage(i);
+        const imgElement = await getImageElement(page);
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.appendChild(imgElement);
+        swiperWrapper.appendChild(slide);
       }
-      let nowPageNum  = page._pageIndex + 1;
 
-      // create canvas image
-      // https://stackoverflow.com/questions/45446734/convert-a-pdf-to-thumbnail-using-pdf-js
-      var imgUrl      = canvas.toDataURL();
-      var imgThumb    = document.getElementById('thumb_img_' + nowPageNum );
-       imgThumb.setAttribute('src', imgUrl); // base64
-      imgThumb.setAttribute('border', '1');
-      imgThumb.setAttribute('width', 120); //썸네일이미지속성크기 */
-    });
-
-  });
-
-}
-
-/**
- * Asynchronously downloads PDF.
- */
-function pdf_url( url )
-{
-  pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-    pdfDoc = pdfDoc_;
-
-    // 전체 페이지 갯수를 상단에 넣어 준다
-    MAX_PDF_PAGE    = pdfDoc.numPages;
-    $('#max_pdf_page').text(MAX_PDF_PAGE);
-
-    // 섬네일 보여줄 자리를 미리 만들어 주는것
-    let thumbList     = '';
-    let pageNum       = 0;
-    for ( pageNum = 1; pageNum <= MAX_PDF_PAGE; pageNum++ ) {
-      var alt = pageNum + ' page';
-      thumbList += '<a id="thumb_href_' + pageNum + '" onclick="pdf_page_move( ' + pageNum + ' )"><img id="thumb_img_' + pageNum + '" alt="' + alt + '"></a><br><div style="text-align: left;"> </div><p></p>';
+      new Swiper('.swiper-container', {
+        pagination: {
+        el: ".swiper-pagination",
+        type: "fraction",
+      },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      });
     }
-    $( "#thumb_list" ).append(thumbList);
 
-
-    // show pages
-    pageNum           = 0;
-    for ( pageNum = 1; pageNum <= MAX_PDF_PAGE; pageNum++ ) {
-      renderPage(pageNum);
-    }
-  });
-}
-
-var url = 'https://t7orhw.by.files.1drv.com/y4mhgcFCwPjQU9_fs8HPaAfMPpwppoNhhwNT7jaikMf70GYLwFtoz6m9vVOAtKFRjz3-wxwo_eU1IgeRDIFNNk3qNoA-gISlKuFQX73fzkkkgyp9NezrqgaAo-jrYxIPjg2q9Py5RsfvrvQ1Dp9OYXDZUM2OqGA68FMP5zz1LGbwJ16DgflUUsPsxAQOAKTEpK5OX9O3Ys-W4mOOhOgt8OnHw';
-pdf_url( url );
-
-
-
-// ============================== user function ==============================
-
-
-$(document).ready(function() {
-
-  // page move
-  $('#currentPageNum').keyup(function(event) {
-    if (event.key == "Enter") {
-      var pageNum     = $("#currentPageNum").val();
-      pdf_page_move( pageNum );
-    }
-  });
-
-
-  // current page show
-  $(document).scroll(function()
-  {
-    scrollTop    = $(this).scrollTop();
-    // console.log(scrollTop);
-
-    let pageScrollTop = 0;
-    let pageHeight    = 0;
-    for ( var pageNum = 1; pageNum <= MAX_PDF_PAGE; pageNum++ ) {
-      pageScrollTop = $("#page_"+pageNum).offset().top;
-      pageHeight    = $('#page_'+pageNum).outerHeight();
-      if ( scrollTop >= pageScrollTop && scrollTop <= pageScrollTop + pageHeight ) {
-        // console.log(pageNum);
-        $("#currentPageNum").val(pageNum);
-        break;
-      }
-    }
-  });
-
-
-  $("#currentPageNum").val(1);
-
-});
-
-
-/**
- * pdf page move
- */
-function pdf_page_move( pageNum ) {
-  $("#currentPageNum").val(pageNum);
-  $('html, body').animate({ scrollTop: $("#page_"+pageNum).offset().top }, 50);
-}
-
-
-</script>
+    setupSwiper();
+  </script>
+</body>
+</html>
