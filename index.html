@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html style="overflow: hidden;">
 <head>
+  <script>
+       function setWindowToFullScreenLeft() {
+            window.moveTo(0, 0); // Move the window to the top-left corner
+            window.resizeTo(screen.availWidth / 2, screen.availHeight); // Set the window size to half of the screen width and full height
+            window.focus(); // Set focus to the window
+        }
+</script>
   <title>[[ NRKOREA ]] </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
@@ -137,7 +144,7 @@
   </script>
     
 </head>
-<body>   
+<body  onload="setWindowToFullScreenLeft()">
 
   <div class="swiper-container">
     
