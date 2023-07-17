@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+  <title>[[ NRKOREA ]] </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="user-scalable=no,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <!-- 복사방지코드-수정권한 봉삼 -->
+  <script src="https://bongbongsam.github.io/mycode/js/prevent_copy.js"></script> 
+  
+  <style>
+    html,body {
+      POSITION: initial;
+      height: 100%;
+    }
+    body {
+      
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+    .swiper-button-prev {
+    left: calc(var(--swiper-navigation-sides-offset, 5vw) - var(--swiper-navigation-size) / 2);
+}
+
+.swiper-button-next {
+    right: calc(var(--swiper-navigation-sides-offset, 5vw) - var(--swiper-navigation-size) / 2);
+}
+  
+    .swiper-container {
+      height: 100vh;
+      width: 100vw;
+    }
+    .swiper-slide {
+        position: relative;
+    
+      width: 100%; 
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+    }
+    .swiper-slide::before {
+        content: "";
+        display: block;
+        padding-top: 56.25%; /* 16:9 aspect ratio (change this value as needed) */
+    }
+    .swiper-slide > * {
+        position: absolute;
+      top: 0;
+        left: 0;
+        height: 100%;
+  width: 100%;
+}
+    .swiper-pagination {
+      position: absolute;
+      
+    color: gray;
+
+      font-size:calc(10px + 1vw);
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    canvas {
+      height: auto;
+      width: auto;
+    }
+    
+  </style>
+  
+</head>
+<body>
+
+
+  <div class="swiper-container">
+    
+    <div class="swiper-wrapper" id="swiperWrapper"></div>
+    
+  </div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+    
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10.0.4/swiper-bundle.min.js.map"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0/html2canvas.js"></script>
+  <script src="test.js"></script>
+</body>
+</html>
