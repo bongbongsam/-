@@ -1,4 +1,4 @@
-const url = 'https://hm2hnw.ph.files.1drv.com/y4mpfgbGcZ3EpCxFmq3skLj0GIy7fR7tsk0to6ZnkjBcMPYq_P4ZsnvRmWlpf7HgTqh3dNXkqQ1BF3GNr3HpX-cau8T7Ufm-Ko1dIg882fGUI7ALL34acR-URKLToq8d5m-9l5-hJUD-dr58INgY19FHmGdCAU_XyS1JGBpWQCHER59sNB_ocftCNIDKgOnNrNZ/2300524_%EB%85%B8%EB%9F%89%EC%A7%84%EC%97%AD%EC%82%AC%20%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C_350%25(%EC%A0%84%EC%B2%B4).pdf?download&psid=1';
+ const url = 'https://hm2hnw.ph.files.1drv.com/y4mpfgbGcZ3EpCxFmq3skLj0GIy7fR7tsk0to6ZnkjBcMPYq_P4ZsnvRmWlpf7HgTqh3dNXkqQ1BF3GNr3HpX-cau8T7Ufm-Ko1dIg882fGUI7ALL34acR-URKLToq8d5m-9l5-hJUD-dr58INgY19FHmGdCAU_XyS1JGBpWQCHER59sNB_ocftCNIDKgOnNrNZ/2300524_%EB%85%B8%EB%9F%89%EC%A7%84%EC%97%AD%EC%82%AC%20%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C_350%25(%EC%A0%84%EC%B2%B4).pdf?download&psid=1';
 
 async function getPdfDoc(url) {
   const loadingTask = pdfjsLib.getDocument(url);
@@ -22,6 +22,7 @@ async function getImageElement(page) {
   return canvas;
 }
 
+
 async function setupSwiper() {
   const pdfDoc = await getPdfDoc(url);
   const numPages = pdfDoc.numPages;
@@ -43,7 +44,15 @@ async function setupSwiper() {
     loop : false,   // 슬라이드 반복 여부
     loopAdditionalSlides : 1,
     freeMode : false, // 슬라이드 넘길 때 위치 고정 여부
-   
+
+      // 슬라이드 반복 시 마지막 슬라이드에서 다음 슬라이드가 보여지지 않는 현상 수정
+    on:{
+      imagesReady : function () { // 모든 내부 이미지 로드후 이벤트 시작
+
+  console.log('슬라이드 이미지 로드 후 실행');
+
+},
+    },
     pagination: {
       el: pagination,
       type: 'fraction',
@@ -52,6 +61,22 @@ async function setupSwiper() {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'
     },
-});
+    breakpoints: {
+      640: {
+        slidesPerView: 1, //레이아웃 뷰 개수
+        spaceBetween: 20,  //위 slidesPerview 여백
+      },
+      768: {
+        slidesPerView: 1,
+        spaceBetween: 40,
+      },
+      1024: {
+        slidesPerView: 1,
+        spaceBetween: 50,
+      },
+    },
+  });
+  
 }
+
 setupSwiper ();
