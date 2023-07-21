@@ -54,20 +54,7 @@ const url = 'https://hm2hnw.ph.files.1drv.com/y4mpfgbGcZ3EpCxFmq3skLj0GIy7fR7tsk
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
         },
-        breakpoints: {
-          640: {
-            slidesPerView: 1, //레이아웃 뷰 개수
-            spaceBetween: 20,  //위 slidesPerview 여백
-          },
-          768: {
-            slidesPerView: 1,
-            spaceBetween: 40,
-          },
-          1024: {
-            slidesPerView: 1,
-            spaceBetween: 50,
-          },
-        },
+        
       });
     }
 
