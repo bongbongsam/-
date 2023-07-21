@@ -14,53 +14,57 @@
       POSITION: initial;
       height: 100%;
     }
-    body {
-      
+    body {      
       background: #eee;
       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      color: #000;
+      font-size: 14px;      
       margin: 0;
       padding: 0;
     }
     .swiper-button-prev {
-    left: calc(var(--swiper-navigation-sides-offset, 5vw) - var(--swiper-navigation-size) / 2);
-}
-
-.swiper-button-next {
-    right: calc(var(--swiper-navigation-sides-offset, 5vw) - var(--swiper-navigation-size) / 2);
-}
-  
+      left: calc(var(--swiper-navigation-sides-offset, 5vw) - var(--swiper-navigation-size) / 2);
+      padding: 25% 35% 25% 0;
+      top: 0; 
+      bottom: 0px;
+      margin-top: 0px;
+    }
+    .swiper-button-next {
+      right: calc(var(--swiper-navigation-sides-offset, 5vw) - var(--swiper-navigation-size) / 2);
+      padding: 25% 0 25% 35%;
+      top: 0; 
+      bottom: 0px;
+      margin-top: 0px;
+    }
     .swiper-container {
       height: 100vh;
       width: 100vw;
     }
     .swiper-slide {
-        position: relative;
-    
+      position: relative;
       width: 100%; 
       /* display: flex;
       justify-content: center;
       align-items: center; */
     }
     .swiper-slide::before {
-        content: "";
-        display: block;
-        padding-top: 56.25%; /* 16:9 aspect ratio (change this value as needed) */
+      content: "";
+      display: block;
+      padding-top: 56.25%; /* 16:9 aspect ratio (change this value as needed) */
     }
     .swiper-slide > * {
-        position: absolute;
-      top: 0;
-        left: 0;
-        height: 100%;
-  width: 100%;
-}
-    .swiper-pagination {
       position: absolute;
-      
-    color: gray;
-
-      font-size:calc(10px + 1vw);
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .swiper-pagination {
+      cursor: pointer;
+      position: absolute;
+      padding: 0 0 5px;
+      color: #00000069;
+      font-size:calc(8px + 1vw);
+      font-weight: bold;
       bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
@@ -70,9 +74,8 @@
       height: auto;
       width: auto;
     }
-    
+   
   </style>
-  
 </head>
 <body>
 
