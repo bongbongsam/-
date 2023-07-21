@@ -53,5 +53,5 @@ async function setupSwiper() {
       prevEl: '.swiper-button-prev'
     },
 });
-
+}
 setupSwiper ();
