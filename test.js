@@ -37,8 +37,13 @@ async function setupSwiper() {
   }
   
   const pagination  = document.querySelector('.swiper-pagination');
-
-    new Swiper('.swiper-container', {
+  var swiper = new Swiper('.swiper-container', {
+    slidesPerView: 1,
+    centeredSlides: true,    //센터모드
+    loop : false,   // 슬라이드 반복 여부
+    loopAdditionalSlides : 1,
+    freeMode : false, // 슬라이드 넘길 때 위치 고정 여부
+   
     pagination: {
       el: pagination,
       type: 'fraction',
@@ -46,9 +51,7 @@ async function setupSwiper() {
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev'
-    }
-  });
-  
-}
+    },
+});
 
 setupSwiper ();
