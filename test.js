@@ -1,4 +1,4 @@
-const url = 'https://t7orhw.by.files.1drv.com//y4m-yHShmgPWLV1ozSE7nlgyTZBzOIY3bqD_aRpWL8pTM035obsav73t-SC3PtwBVVzDVDYCUsd2nNkOmI90nM_xqZ5K6TVLUE_TesBVVvhkmsaexywkPAK2lFnsZRtezso3qLNkdxZQVmrhvC9ajfTg16S5OQNAyb6t4EGCcZvYCygifywKHsX4-pzgFTVo286/%5BBP%5D%20%EA%B5%90%EC%9C%A1%EC%9E%90%EB%A3%8C_%EC%8B%A0%EC%9C%A0%EB%B2%A0%EB%9D%BC%ED%8A%B8_REV_2_0%20(2).pdf?download&psid=1';
+const url = 'https://hm2hnw.ph.files.1drv.com/y4mInoKG924jrNIsVb2dADIOKaOpQd_X1EyDfWYflsAG92WNsS6ywj97ldqM01ncBju9X51GdYKp0aD-yd8W9DjToG4DcwJL1Iio9Z6YBmF_0dbdZWt81AS3V9aIwbdGoihC9JW2luTOvTboZgQQIXv4V7_sD-PGoPw4Phytv14RIjW5bgqAlu4lUCN2V7jNBge/2300524_%EB%85%B8%EB%9F%89%EC%A7%84%EC%97%AD%EC%82%AC%20%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C_350%25(%EC%A0%84%EC%B2%B4).pdf?download&psid=1';
              
     async function getPdfDoc(url) {
       const loadingTask = pdfjsLib.getDocument(url);
