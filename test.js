@@ -1,4 +1,4 @@
-const url = 'https://ieiuqg.ph.files.1drv.com/y4mc_jSl3YE2ZnZ7nXW_tdN0hk1Edc5ZcKS9KgvTsFgCdXcbfp_nV-qYwfSu_DEulAZ1PGl7ktJXQG0qK9TBSbQ2zmfPexxlLASIh78xI5Q4kMHYTVvEpAEW81VY34qWoeV4QSrkEtCw-Nzq1qQdxdg5vqZU4ku8-6ddU35cTxhUbBHDGqovmD0L2WE1O3f3S4-/2300524_%EB%85%B8%EB%9F%89%EC%A7%84%EC%97%AD%EC%82%AC%20%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C_350%25(%EC%A0%84%EC%B2%B4).pdf?&psid=1';
+const url = 'https://t7phca.by.files.1drv.com/y4msGbqc891zg4h3buqcrKZATuQuY9wbO-2uGkNOpmDCcHX43vfTvvmIWwdkbkKNAS2c4XxiNUkttwBNZJkh4tA0026lWOpW_XmF6sbR6RXXjuDPEuNqvMZ1YlFBkVLSG-aAKCfxpLJttXFkaxMjuaSB0yXykMl4RLiF5JBkn08qUvcSnYxIajCYm6cC9uCTzQ_M-gt2x0FWPZg4dqcP6c68g';
              
     async function getPdfDoc(url) {
       const loadingTask = pdfjsLib.getDocument(url);
