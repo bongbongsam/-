@@ -1,4 +1,4 @@
-const url = 'https://hm2hnw.ph.files.1drv.com/y4mhz9qfjqWjCl1NaijyaL77FMHFmYJJ9QUCvl-qioCyXzvCoVa8jrd_qIwYg1fBirOcx_t3Z_fXNeOzq11RdsxW6u9XBGk9LW5k27md5nXG__5_AsCdW8iM0kAWjshHAbWlv9-ID4sDEBaJN9n0GkLgQHk8YeTLlHUc11G5C2VaBVNmkm9EwL5QXHvPpTHHvOD';
+const url = '';
              
     async function getPdfDoc(url) {
       const loadingTask = pdfjsLib.getDocument(url);
