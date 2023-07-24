@@ -77,9 +77,18 @@
     var height = (width * 21.07) / 29.7;
     iframe.style.height = height + "px";
   }
+  function setMaxWidth() {
+    var iframe = document.getElementById("myIframe");
+    var maxWidth = 1296; // Set your desired maximum width here (in pixels)
+    iframe.style.maxWidth = maxWidth + "px";
+  }
   // 페이지 로드 완료 시 iframe 높이 조절
-  window.addEventListener("DOMContentLoaded", adjustIframeHeight);
-  // 창 크기 조절 시 iframe 높이 조절
+  window.addEventListener("DOMContentLoaded", function () {
+    adjustIframeHeight();
+    setMaxWidth();
+  });
+
+  // Adjust the height of the iframe when the window is resized
   window.addEventListener("resize", adjustIframeHeight);
 </script>
 
