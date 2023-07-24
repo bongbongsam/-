@@ -1,4 +1,4 @@
-const url = '';
+const url = 'https://t7orhw.by.files.1drv.com//y4m-yHShmgPWLV1ozSE7nlgyTZBzOIY3bqD_aRpWL8pTM035obsav73t-SC3PtwBVVzDVDYCUsd2nNkOmI90nM_xqZ5K6TVLUE_TesBVVvhkmsaexywkPAK2lFnsZRtezso3qLNkdxZQVmrhvC9ajfTg16S5OQNAyb6t4EGCcZvYCygifywKHsX4-pzgFTVo286/%5BBP%5D%20%EA%B5%90%EC%9C%A1%EC%9E%90%EB%A3%8C_%EC%8B%A0%EC%9C%A0%EB%B2%A0%EB%9D%BC%ED%8A%B8_REV_2_0%20(2).pdf?download&psid=1';
              
     async function getPdfDoc(url) {
       const loadingTask = pdfjsLib.getDocument(url);
