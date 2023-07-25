@@ -1,14 +1,11 @@
-
 <!DOCTYPE html>
-<html style="overflow: hidden;">
+<html style="overflow: hidden;" >
 <head>
-  <title>[[ NRKOREA ]] </title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="user-scalable=no,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport"content="user-scalable=no,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  <title>PDF Image Slider</title>
+  <!-- Add Swiper CSS -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-  <!-- 복사방지코드-수정권한 봉삼 -->
-  <script src="https://bongbongsam.github.io/mycode/js/prevent_copy.js"></script> 
-  
   <style>
     html,body {
       POSITION: initial;
@@ -74,43 +71,74 @@
       left: 50%;
       transform: translateX(-50%);
     }
-    
-    canvas {
-      height: auto;
-      width: auto;
-    }
-   
-  </style>
-  
+    </style>
 </head>
 <body>
-  
-  
-  <div class="swiper-container" >
-    
-    <div class="swiper-wrapper" id="swiperWrapper"></div></div> 
-    
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <!-- Your PDF image slides will be added here -->
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+    <!-- Add Navigation Buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-pagination"></div>
-  <script> 
-    function iframeLoaded() {
-   var iframe = document.getElementById('myIframe');
-   var loadingIndicator = document.getElementById('loadingIndicator');
- 
-   // The iframe has finished loading
-   console.log('The iframe has loaded completely.');
- 
-   // Hide the loading indicator and show the iframe
-   loadingIndicator.style.display = 'none';
-   iframe.style.display = 'block';
- }
-  </script> 
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>  
-  <script src="https://cdn.jsdelivr.net/npm/swiper@10.0.4/swiper-bundle.min.js.map"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0/html2canvas.js"></script>
-  <script src="test.js"></script>
+
+  <!-- Add Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.3/pdf.min.js"></script>
+  <script>
+    const startPage = 1;
+    const imageWrapper = document.querySelector(".swiper-wrapper");
+
+    function loadPDFImage(pageNumber) {
+      const imageUrl = `https://word-view.officeapps.live.com/wv/ResReader.ashx?n=p${pageNumber}.img&v=00000000-0000-0000-0000-000000000802&usid=2b0c68dc-e465-4e37-be95-211425bfc76b&build=16.0.16721.41004&WOPIsrc=https%3A%2F%2Fwopi%2Eonedrive%2Ecom%2Fwopi%2Ffiles%2FB57DF9D3D88A4E61%211664&access_token=4wVnFKIuwqyprU-kq8Y1Inf6HaVRefBpQwHJB-8VplJY54ppRMjCtX5nJy4GSrtcQ4SI2pkSAsYkztrrrn0cKTfq24yUo-7vpDyCNaUeAdgKCLy9sIzvbbw0mc7a29coYPBn112gw9TstaR6rCU0IqCg&access_token_ttl=1692066047128&z=aQjU3REY5RDNEODhBNEU2MSExNjY0LjE1&waccluster=PJP1&PdfMode=1`;
+
+      const image = new Image();
+      image.src = imageUrl;
+      image.alt = `Page ${pageNumber}`;
+      image.onload = function () {
+        const slideDiv = document.createElement("div");
+        slideDiv.classList.add("swiper-slide");
+        slideDiv.appendChild(image);
+        imageWrapper.appendChild(slideDiv);
+
+        // Load the next page
+        loadPDFImage(pageNumber + 1);
+      };
+
+      image.onerror = function () {
+        // Last page reached, initialize Swiper
+        initializeSwiper();
+      };
+    }
+
+    function initializeSwiper() {
+      var mySwiper = new Swiper(".swiper-container", {
+        slidesPerView: 1,
+        centeredSlides: true,    //센터모드
+        loop : false,   // 슬라이드 반복 여부
+        loopAdditionalSlides : 1,
+        freeMode : false, // 슬라이드 넘길 때 위치 고정 여부
+        // Optional settings
+        
+        pagination: {
+          el: ".swiper-pagination",
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // Start loading the first page
+      loadPDFImage(startPage);
+    });
+  </script>
 </body>
 </html>
+
