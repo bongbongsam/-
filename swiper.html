@@ -10,10 +10,14 @@
   <script src="https://bongbongsam.github.io/mycode/js/prevent_copy.js"></script> 
   
   <style>
-    html,body {
+   html,body {
       POSITION: initial;
       height: 100%;
+      
     }
+    :root {
+    --swiper-navigation-size: calc(20px + 2vw);
+}
     body {      
       background: #eee;
       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -89,8 +93,10 @@
   </div>
 
   <!-- Add Swiper JS -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.3/pdf.min.js"></script>
+ <script src="https://unpkg.com/swiper@10.0.0-beta.1/swiper-bundle.min.js"></script>
+ <script src="https://unpkg.com/swiper@10.0.0-beta.1/swiper-bundle.js.map"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js"></script>
+
   <script>
     const startPage = 1;
     const imageWrapper = document.querySelector(".swiper-wrapper");
@@ -105,11 +111,15 @@
         const slideDiv = document.createElement("div");
         slideDiv.classList.add("swiper-slide");
         slideDiv.appendChild(image);
-        imageWrapper.appendChild(slideDiv);
+        if (imageWrapper) {
+          imageWrapper.appendChild(slideDiv);
 
-        // Load the next page
-        loadPDFImage(pageNumber + 1);
+
+         // Load the next page
+          loadPDFImage(pageNumber + 1);
+        }
       };
+
 
       image.onerror = function () {
         // Last page reached, initialize Swiper
