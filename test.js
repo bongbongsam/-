@@ -1,61 +1,53 @@
-const url = 'https://t7phca.by.files.1drv.com/y4msGbqc891zg4h3buqcrKZATuQuY9wbO-2uGkNOpmDCcHX43vfTvvmIWwdkbkKNAS2c4XxiNUkttwBNZJkh4tA0026lWOpW_XmF6sbR6RXXjuDPEuNqvMZ1YlFBkVLSG-aAKCfxpLJttXFkaxMjuaSB0yXykMl4RLiF5JBkn08qUvcSnYxIajCYm6cC9uCTzQ_M-gt2x0FWPZg4dqcP6c68g';
-             
-    async function getPdfDoc(url) {
-      const loadingTask = pdfjsLib.getDocument(url);
-      return await loadingTask.promise;
+const startPage = 1;
+    const imageWrapper = document.querySelector(".swiper-wrapper");
+
+    function loadPDFImage(pageNumber) {
+      const imageUrl = `https://word-view.officeapps.live.com/wv/ResReader.ashx?n=p${pageNumber}.img&v=00000000-0000-0000-0000-000000000802&usid=2b0c68dc-e465-4e37-be95-211425bfc76b&build=16.0.16721.41004&WOPIsrc=https%3A%2F%2Fwopi%2Eonedrive%2Ecom%2Fwopi%2Ffiles%2FB57DF9D3D88A4E61%211664&access_token=4wVnFKIuwqyprU-kq8Y1Inf6HaVRefBpQwHJB-8VplJY54ppRMjCtX5nJy4GSrtcQ4SI2pkSAsYkztrrrn0cKTfq24yUo-7vpDyCNaUeAdgKCLy9sIzvbbw0mc7a29coYPBn112gw9TstaR6rCU0IqCg&access_token_ttl=1692066047128&z=aQjU3REY5RDNEODhBNEU2MSExNjY0LjE1&waccluster=PJP1&PdfMode=1`;
+
+      const image = new Image();
+      image.src = imageUrl;
+      image.alt = `Page ${pageNumber}`;
+      image.onload = function () {
+        const slideDiv = document.createElement("div");
+        slideDiv.classList.add("swiper-slide");
+        slideDiv.appendChild(image);
+        if (imageWrapper) {
+          imageWrapper.appendChild(slideDiv);
+
+
+         // Load the next page
+          loadPDFImage(pageNumber + 1);
+        }
+      };
+
+
+      image.onerror = function () {
+        // Last page reached, initialize Swiper
+        initializeSwiper();
+      };
     }
 
-    async function getImageElement(page) {
-    const scale = window.innerWidth / page.getViewport({ scale: 1 }).width;
-    const viewport = page.getViewport({ scale: scale });
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
-
-    const renderContext = {
-      canvasContext: context,
-      viewport: viewport
-    };
-
-    await page.render(renderContext).promise;
-    return canvas;
-    }
-
-    async function setupSwiper() {
-      const pdfDoc = await getPdfDoc(url);
-      const numPages = pdfDoc.numPages;
-      const swiperWrapper = document.getElementById('swiperWrapper');
-
-      for (let i = 1; i <= numPages; i++) {
-        const page = await pdfDoc.getPage(i);
-        const imgElement = await getImageElement(page);
-        const slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        slide.appendChild(imgElement);
-        swiperWrapper.appendChild(slide);
-      }
-  
-      const pagination  = document.querySelector('.swiper-pagination');
-      var swiper = new Swiper('.swiper-container', {
+    function initializeSwiper() {
+      var mySwiper = new Swiper(".swiper-container", {
         slidesPerView: 1,
         centeredSlides: true,    //센터모드
         loop : false,   // 슬라이드 반복 여부
         loopAdditionalSlides : 1,
         freeMode : false, // 슬라이드 넘길 때 위치 고정 여부
-
-        // 슬라이드 반복 시 마지막 슬라이드에서 다음 슬라이드가 보여지지 않는 현상 수정
+        // Optional settings
         
         pagination: {
-          el: pagination,
+          el: ".swiper-pagination",
           type: 'fraction',
         },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
-        
       });
     }
 
-    setupSwiper ();
+    document.addEventListener("DOMContentLoaded", function () {
+      // Start loading the first page
+      loadPDFImage(startPage);
+    });
